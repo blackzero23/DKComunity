@@ -14,7 +14,10 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+###Query dsl
+/src/main/generated
 
+###yml
 *.yml
 
 # Package Files #
