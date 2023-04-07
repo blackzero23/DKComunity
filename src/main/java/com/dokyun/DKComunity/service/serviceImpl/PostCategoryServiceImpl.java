@@ -1,17 +1,19 @@
-package com.dokyun.DKComunity.service;
+package com.dokyun.DKComunity.service.serviceImpl;
 
 import com.dokyun.DKComunity.domain.PostsCategory;
 import com.dokyun.DKComunity.dto.post.PostCateCreateDto;
 import com.dokyun.DKComunity.dto.post.PostCateInfoDto;
 import com.dokyun.DKComunity.repository.PostCategoryRepository;
-import com.dokyun.DKComunity.service.serviceImpl.PostCategoryService;
+import com.dokyun.DKComunity.service.PostCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostCategoryServiceImpl implements PostCategoryService {
 
     private final PostCategoryRepository postCategoryRepository;
@@ -21,6 +23,7 @@ public class PostCategoryServiceImpl implements PostCategoryService {
         postCategoryRepository.save(postsCategory);
     }
 
+    //TODO : HIT 동시성문제랑 같이 구현하기.
     @Override
     public PostCateInfoDto getPostCategory(Long id) {
         PostsCategory postsCategory = postCategoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리입니다."));

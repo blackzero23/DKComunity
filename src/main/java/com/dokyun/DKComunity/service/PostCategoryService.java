@@ -1,4 +1,4 @@
-package com.dokyun.DKComunity.service.serviceImpl;
+package com.dokyun.DKComunity.service;
 
 import com.dokyun.DKComunity.dto.post.PostCateCreateDto;
 import com.dokyun.DKComunity.dto.post.PostCateInfoDto;

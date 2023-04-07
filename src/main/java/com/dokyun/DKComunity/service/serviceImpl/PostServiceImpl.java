@@ -1,4 +1,4 @@
-package com.dokyun.DKComunity.service;
+package com.dokyun.DKComunity.service.serviceImpl;
 
 import com.dokyun.DKComunity.domain.Posts;
 import com.dokyun.DKComunity.domain.PostsCategory;
@@ -6,14 +6,16 @@ import com.dokyun.DKComunity.dto.post.PostCreateDto;
 import com.dokyun.DKComunity.dto.post.PostInfoDto;
 import com.dokyun.DKComunity.repository.PostCategoryRepository;
 import com.dokyun.DKComunity.repository.PostRepository;
-import com.dokyun.DKComunity.service.serviceImpl.PostService;
+import com.dokyun.DKComunity.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostCategoryRepository postCategoryRepository;
