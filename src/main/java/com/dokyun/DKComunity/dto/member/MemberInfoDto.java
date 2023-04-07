@@ -1,4 +1,4 @@
-package com.dokyun.DKComunity.dto;
+package com.dokyun.DKComunity.dto.member;
 
 import com.dokyun.DKComunity.domain.Member;
 import lombok.AllArgsConstructor;

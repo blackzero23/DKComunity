@@ -1,4 +1,4 @@
-package com.dokyun.DKComunity.dto;
+package com.dokyun.DKComunity.dto.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

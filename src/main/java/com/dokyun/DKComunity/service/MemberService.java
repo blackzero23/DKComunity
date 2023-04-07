@@ -1,9 +1,9 @@
-package com.dokyun.DKComunity.service.serviceImpl;
+package com.dokyun.DKComunity.service;
 
-import com.dokyun.DKComunity.dto.MemberConditionDto;
-import com.dokyun.DKComunity.dto.MemberInfoDto;
-import com.dokyun.DKComunity.dto.MemberSignupDto;
-import com.dokyun.DKComunity.dto.MemberUpdateDto;
+import com.dokyun.DKComunity.dto.member.MemberConditionDto;
+import com.dokyun.DKComunity.dto.member.MemberInfoDto;
+import com.dokyun.DKComunity.dto.member.MemberSignupDto;
+import com.dokyun.DKComunity.dto.member.MemberUpdateDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

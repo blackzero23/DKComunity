@@ -1,12 +1,12 @@
-package com.dokyun.DKComunity.service;
+package com.dokyun.DKComunity.service.serviceImpl;
 
 import com.dokyun.DKComunity.domain.Member;
-import com.dokyun.DKComunity.dto.MemberConditionDto;
-import com.dokyun.DKComunity.dto.MemberInfoDto;
-import com.dokyun.DKComunity.dto.MemberSignupDto;
-import com.dokyun.DKComunity.dto.MemberUpdateDto;
+import com.dokyun.DKComunity.dto.member.MemberConditionDto;
+import com.dokyun.DKComunity.dto.member.MemberInfoDto;
+import com.dokyun.DKComunity.dto.member.MemberSignupDto;
+import com.dokyun.DKComunity.dto.member.MemberUpdateDto;
 import com.dokyun.DKComunity.repository.MemberRepository;
-import com.dokyun.DKComunity.service.serviceImpl.MemberService;
+import com.dokyun.DKComunity.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
