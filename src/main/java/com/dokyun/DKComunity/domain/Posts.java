@@ -13,6 +13,7 @@ public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "posts_id")
     private Long id;
 
     @Column(nullable = false, length = 100)
@@ -22,7 +23,7 @@ public class Posts extends BaseTimeEntity {
     private String content;
 
     //firstData 0
-    @Column(nullable = false, columnDefinition = "bigint default 0")
+    @Column(columnDefinition = "bigint default 0")
     private Long hit;
 
     @ManyToOne(fetch = FetchType.LAZY)
