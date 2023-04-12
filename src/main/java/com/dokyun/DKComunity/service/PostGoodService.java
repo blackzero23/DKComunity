@@ -12,4 +12,5 @@ public interface PostGoodService {
     //ex) 관리자에 의해서 삭제된 댓글입니다, 블라인드 처리된 댓글입니다. 사용자에 의한 삭제 입니다.
     void deleteGood(PostGoodDto postGoodDto);
     Page<PostGoodDto> getPostGoodListOfMember(PostGoodDto postGoodDto, Pageable pageable);
+    //TODO: 좋아요 개수.
 }
