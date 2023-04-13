@@ -74,4 +74,10 @@ public class PostCommentsServiceImpl implements PostCommentsService {
         PostComments postComments = postCommentsRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
         postCommentsRepository.delete(postComments);
     }
+
+    @Override
+    public Long getPostCommentCountByPostId(Long categoryId) {
+
+        return null;
+    }
 }

@@ -13,4 +13,7 @@ public interface PostCommentsService {
     Page<PostCommentInfoDto> getPostCommentByPostId(Long postId, Pageable pageable);
     Page<PostCommentInfoDto> getPostCommentByMemberId(Long memberId, Pageable pageable);
     void deletePostComment(Long commentId,Long memberId);
+
+    //TODO: 해당 게시물의 댓글 개수인데 댓글 갯수 + 대댓글 개수 까지 있어야되기 때문에 조금 복잡.
+    Long getPostCommentCountByPostId(Long postId);
 }
