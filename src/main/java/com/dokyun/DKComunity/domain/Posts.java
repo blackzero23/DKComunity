@@ -29,6 +29,9 @@ public class Posts extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private PostsCategory postsCategory;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
+
     public static Posts createPosts(String title, String content,  PostsCategory postsCategory){
         Posts posts = new Posts();
         posts.setTitle(title);
