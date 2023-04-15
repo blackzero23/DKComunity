@@ -1,9 +1,11 @@
 package com.dokyun.DKComunity.service.serviceImpl;
 
+import com.dokyun.DKComunity.domain.Member;
 import com.dokyun.DKComunity.domain.Posts;
 import com.dokyun.DKComunity.domain.PostsCategory;
 import com.dokyun.DKComunity.dto.post.PostCreateDto;
 import com.dokyun.DKComunity.dto.post.PostInfoDto;
+import com.dokyun.DKComunity.repository.MemberRepository;
 import com.dokyun.DKComunity.repository.PostCategoryRepository;
 import com.dokyun.DKComunity.repository.PostRepository;
 import com.dokyun.DKComunity.service.PostService;
@@ -17,15 +19,18 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class PostServiceImpl implements PostService {
+
+    private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final PostCategoryRepository postCategoryRepository;
 
     //TODO: 시간상 넘어가지만 차후 공통 findById duplicate 만들어서 분리 시키기
     @Override
     public PostInfoDto createPost(PostCreateDto postCreateDto) {
+        Member member = memberRepository.findById(postCreateDto.getMemberId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         PostsCategory postsCategory = postCategoryRepository.findById(postCreateDto.getCategoryId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리입니다."));
 
-        Posts posts = Posts.createPosts(postCreateDto.getTitle(), postCreateDto.getContent(), postsCategory);
+        Posts posts = Posts.createPosts(postCreateDto.getTitle(), postCreateDto.getContent(), member ,postsCategory);
 
         Posts savedPost = postRepository.save(posts);
 
