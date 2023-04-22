@@ -7,15 +7,12 @@ import com.dokyun.DKComunity.dto.post.PostCommentsGoodInfoDto;
 import com.dokyun.DKComunity.repository.MemberRepository;
 import com.dokyun.DKComunity.repository.PostCommentsGoodRepository;
 import com.dokyun.DKComunity.repository.PostCommentsRepository;
-import com.dokyun.DKComunity.repository.PostRepository;
 import com.dokyun.DKComunity.service.PostCommentsGoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
 
 @Service
 @Transactional
@@ -49,7 +46,7 @@ public class PostCommentsGoodServiceImpl implements PostCommentsGoodService {
 
         //TODO: N+1 해결 좋아요 1건당 해당 댓글내용 조회 하기때문에 한번에 조회 테스트로 확인해보기.
         //List 처리가 자동으로 되던가 확인.
-        return postCommentsGoodRepository.findByMemberId(memberId, pageable).map(postCommentsGood ->
+        return postCommentsGoodRepository.findByMember(memberId, pageable).map(postCommentsGood ->
                 new PostCommentsGoodInfoDto(postCommentsGood.getId(),postCommentsGood.getMember().getId()
                   ,postCommentsGood.getPostComments().getId(), postCommentsGood.getPostComments().getContent()));
     }
