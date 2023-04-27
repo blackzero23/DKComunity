@@ -43,6 +43,6 @@ public class PostBadServiceImpl implements PostBadService {
     @Override
     public Page<PostBadDto> getPostGoodListOfMember(PostBadDto PostBadDto, Pageable pageable) {
         memberRepository.findById(PostBadDto.getMemberId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-        return postBadRepository.findByMember(PostBadDto.getMemberId(), pageable).map(PostBadDto::of);
+        return postBadRepository.findByMemberId(PostBadDto.getMemberId(), pageable).map(PostBadDto::of);
     }
 }
