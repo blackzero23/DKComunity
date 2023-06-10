@@ -16,4 +16,5 @@ public interface PostBadRepository extends JpaRepository<PostsBad, Long> {
     @Query(value = "select pb from PostsBad pb join fetch pb.member join fetch pb.posts where pb.member.id = :memberId",
             countQuery = "select count(pb) from PostsBad pb join pb.member join pb.posts where pb.member.id = :memberId")
     Page<PostsBad> findByMemberId(Long memberId, Pageable pageable);
+
 }
