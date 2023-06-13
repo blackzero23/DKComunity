@@ -44,7 +44,10 @@ class PostCommentsServiceTest {
 //        assertEquals(postCommentInfoDto.getPostId(), postCommentCreateDto.getPostId());
 //        assertEquals(postCommentInfoDto.getMemberId(), postCommentCreateDto.getMemberId());
 //        assertEquals(postCommentInfoDto.getContent(), postCommentCreateDto.getContent());
-        Member member = Member.createMember("test", "test", "test");
+        Member member = Member.builder().nickName("test")
+                .password("nickName")
+                .email("test@gmail.com")
+                .build();
         Member savedMember = memberRepository.save(member);
         PostsCategory category = PostsCategory.createCategory("test");
         PostsCategory savedCategory = postCategoryRepository.save(category);

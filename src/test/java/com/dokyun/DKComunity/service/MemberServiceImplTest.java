@@ -20,8 +20,12 @@ class MemberServiceImplTest {
     @DisplayName("회원 가입 테스트")
     void givenMember_whenSave_thenSuccess() {
         //given
-        Member member = Member.createMember("test", "test", "test@name.com");
+        Member member = Member.builder().nickName("test")
+                .password("nickName")
+                .email("test@gmail.com")
+                .build();
         //when
+
         Member savedMember = memberRepository.save(member);
         //then
         Assertions.assertThat(savedMember.getId()).isEqualTo(member.getId());
@@ -31,7 +35,11 @@ class MemberServiceImplTest {
     @DisplayName("회원 수정 테스트")
     void givenMember_whenUpdate_thenSuccess() {
         //given
-        Member member = Member.createMember("test", "test", "test@Name.com");
+        Member member = Member.builder().nickName("test")
+                .password("nickName")
+                .email("test@gmail.com")
+                .build();
+
         Member savedMember = memberRepository.save(member);
 
         //when
@@ -45,7 +53,10 @@ class MemberServiceImplTest {
     @DisplayName("회원 삭제 테스트")
     void givenMember_whenDelete_thenSuccess() {
         //given
-        Member member = Member.createMember("test", "test", "test@gmail.com");
+        Member member = Member.builder().nickName("test")
+                .password("nickName")
+                .email("test@gmail.com")
+                .build();
         Member savedMember = memberRepository.save(member);
 
         //when

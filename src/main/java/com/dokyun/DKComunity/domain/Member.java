@@ -1,7 +1,9 @@
 package com.dokyun.DKComunity.domain;
 
 import com.dokyun.DKComunity.util.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Members")
 @Getter @Setter
+@NoArgsConstructor
 public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,21 +24,11 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, length = 100)
     private String email;
 
-    public static Member createMember(String password, String nickName, String email){
-        Member member = new Member();
-        member.setPassword(password);
-        member.setNickName(nickName);
-        member.setEmail(email);
-        return member;
-    }
-
-    public static Member toEntity(Long id, String password, String nickName, String email){
-        Member member = new Member();
-        member.setId(id);
-        member.setPassword(password);
-        member.setNickName(nickName);
-        member.setEmail(email);
-        return member;
+    @Builder
+    public Member (String nickName, String password, String email){
+        this.nickName = nickName;
+        this.password = password;
+        this.email = email;
     }
 
 }
