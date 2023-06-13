@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Members")
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class Member extends BaseTimeEntity {
     @Id
@@ -18,14 +18,23 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id")
     private Long id;
     @Column(nullable = false, length = 100)
+    @Setter
     private String password;
     @Column(nullable = false, length = 100)
+    @Setter
     private String nickName;
     @Column(nullable = false, length = 100)
+    @Setter
     private String email;
 
     @Builder
     public Member (String nickName, String password, String email){
+        this.nickName = nickName;
+        this.password = password;
+        this.email = email;
+    }
+
+    public void updateMemberInfo(String nickName, String password, String email) {
         this.nickName = nickName;
         this.password = password;
         this.email = email;
