@@ -49,7 +49,7 @@ class PostCommentsServiceTest {
                 .email("test@gmail.com")
                 .build();
         Member savedMember = memberRepository.save(member);
-        PostsCategory category = PostsCategory.createCategory("test");
+        PostsCategory category = PostsCategory.builder().title("test").build();
         PostsCategory savedCategory = postCategoryRepository.save(category);
         Posts posts = Posts.createPosts("test", "test", savedMember, savedCategory);
         Posts savedPosts = postRepository.save(posts);

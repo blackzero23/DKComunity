@@ -1,13 +1,16 @@
 package com.dokyun.DKComunity.domain;
 
 import com.dokyun.DKComunity.util.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter@Setter
+@Getter
+@NoArgsConstructor
 public class PostsCategory extends BaseTimeEntity {
 
     @Id
@@ -16,14 +19,12 @@ public class PostsCategory extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, length = 100)
+    @Setter
     private String title;
 
-    public static PostsCategory createCategory(String title){
-        PostsCategory postsCategory = new PostsCategory();
-        postsCategory.setTitle(title);
-        return postsCategory;
+    @Builder
+    public PostsCategory(String title){
+        this.title = title;
     }
-
-
 
 }
