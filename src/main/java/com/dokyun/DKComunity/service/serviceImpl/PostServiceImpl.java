@@ -30,7 +30,12 @@ public class PostServiceImpl implements PostService {
         Member member = memberRepository.findById(postCreateDto.getMemberId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         PostsCategory postsCategory = postCategoryRepository.findById(postCreateDto.getCategoryId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리입니다."));
 
-        Posts posts = Posts.createPosts(postCreateDto.getTitle(), postCreateDto.getContent(), member ,postsCategory);
+        Posts posts = Posts.builder()
+                .postsCategory(postsCategory)
+                .title(postCreateDto.getTitle())
+                .content(postCreateDto.getContent())
+                .member(member)
+                .build();
 
         Posts savedPost = postRepository.save(posts);
 

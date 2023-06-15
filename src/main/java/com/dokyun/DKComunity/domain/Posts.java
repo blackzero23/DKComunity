@@ -2,13 +2,16 @@ package com.dokyun.DKComunity.domain;
 
 
 import com.dokyun.DKComunity.util.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter@Setter
+@NoArgsConstructor
 public class Posts extends BaseTimeEntity {
 
     @Id
@@ -32,28 +35,18 @@ public class Posts extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    public static Posts createPosts(String title, String content, Member member, PostsCategory postsCategory){
-        Posts posts = new Posts();
-        posts.setTitle(title);
-        posts.setContent(content);
-        posts.setPostsCategory(postsCategory);
-        return posts;
+    @Builder
+    public Posts (PostsCategory postsCategory,String title, String content, Member member){
+        this.postsCategory = postsCategory;
+        this.title = title;
+        this.content = content;
+        this.member = member;
     }
 
     public void updatePosts(String title, String content){
         this.setTitle(title);
         this.setContent(content);
         this.setPostsCategory(postsCategory);
-    }
-
-    public static Posts toEntity(Long id, String title, String content, Long hit, PostsCategory postsCategory){
-        Posts posts = new Posts();
-        posts.setId(id);
-        posts.setTitle(title);
-        posts.setContent(content);
-        posts.setHit(hit);
-        posts.setPostsCategory(postsCategory);
-        return posts;
     }
 
 }
