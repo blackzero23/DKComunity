@@ -23,8 +23,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void signup(MemberSignupDto memberSignupDto) {
-        Member member = Member.createMember(memberSignupDto.getEmail(),
-                passwordEncoder.encode(memberSignupDto.getPassword()), memberSignupDto.getNickName());
+
+        Member member = Member.builder()
+                .nickName(memberSignupDto.getNickName())
+                .password(passwordEncoder.encode(memberSignupDto.getPassword()))
+                .email(memberSignupDto.getEmail())
+                .build();
+
         Member findMember = validateDuplicateMember(member);
         memberRepository.save(member);
     }
