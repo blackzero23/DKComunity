@@ -5,11 +5,14 @@ import com.dokyun.DKComunity.dto.post.PostCateCreateDto;
 import com.dokyun.DKComunity.dto.post.PostCateInfoDto;
 import com.dokyun.DKComunity.repository.PostCategoryRepository;
 import com.dokyun.DKComunity.service.PostCategoryService;
+import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +22,8 @@ public class PostCategoryServiceImpl implements PostCategoryService {
     private final PostCategoryRepository postCategoryRepository;
     @Override
     public void createPostCategory(PostCateCreateDto postCateCreateDto) {
-        PostsCategory postsCategory = validateDuplicatePostCategory(postCateCreateDto.getTitle());
+       validateDuplicatePostCategory(postCateCreateDto.getTitle());
+        PostsCategory postsCategory = PostsCategory.builder().title(postCateCreateDto.getTitle()).build();
         postCategoryRepository.save(postsCategory);
     }
 
@@ -55,8 +59,18 @@ public class PostCategoryServiceImpl implements PostCategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리입니다."));
     }
 
-    PostsCategory validateDuplicatePostCategory(String title){
-        return postCategoryRepository.findByTitle(title)
-                .orElseThrow(() -> new IllegalArgumentException("이미 존재하는 카테고리입니다."));
+    void validateDuplicatePostCategory(String title){
+//    TODO: 카테고리 중복확인 Exception 부분 다시 만들기
+        Optional<PostsCategory> optionalPostsCategory = postCategoryRepository.findByTitle(title);
+        PostsCategory postsCategory = null;
+        try{
+            if(optionalPostsCategory.isPresent())
+                throw new DuplicateRequestException();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
