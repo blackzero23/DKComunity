@@ -80,6 +80,21 @@ class PostServiceImplTest {
         Assertions.assertThat("updateContent").isEqualTo(postInfoDto.getContent());
     }
 
+    @DisplayName("게시글 Id 단일 조회")
+    @Test
+    void postGetId(){
+        //given
+        MemberSignupDto memberSignupDto = MemberSignupDto.builder().nickName("test").email("test@gmail.com").password("test").build();
+        memberService.signup(memberSignupDto);
+        postCategoryService.createPostCategory(PostCateCreateDto.builder().title("quant").build());
+        Optional<PostsCategory> postsCategory = postCategoryRepository.findByTitle("quant");
+        PostInfoDto post = postService.createPost(PostCreateDto.builder().categoryId(1L).memberId(1L).content("내용 없음").title("테스트한다!").build());
+        //when
+        PostInfoDto findPostsInfoDto = postService.getPost(1L);
+        //then
+        Assertions.assertThat(findPostsInfoDto.getTitle()).isEqualTo("테스트한다!");
+    }
+
     @DisplayName("게시글 삭제")
     @Test
     void postserviceDelete(){
