@@ -10,7 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter@Setter
+@Getter
 @NoArgsConstructor
 public class Posts extends BaseTimeEntity {
 
@@ -43,10 +43,10 @@ public class Posts extends BaseTimeEntity {
         this.member = member;
     }
 
-    public void updatePosts(String title, String content){
-        this.setTitle(title);
-        this.setContent(content);
-        this.setPostsCategory(postsCategory);
+    public void updatePosts(String title, String content, PostsCategory postsCategory){
+        this.title = title;
+        this.content = content;
+        this.postsCategory = postsCategory;
     }
 
 }
