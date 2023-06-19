@@ -1,8 +1,7 @@
 package com.dokyun.DKComunity.dto.post;
 
 import com.dokyun.DKComunity.domain.Posts;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +17,7 @@ public class PostInfoDto  {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Long postCateId;
+
 
     public static PostInfoDto of(Posts post){
         PostInfoDto postInfoDto = new PostInfoDto();

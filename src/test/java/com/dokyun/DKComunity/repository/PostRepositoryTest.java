@@ -141,8 +141,7 @@ class PostRepositoryTest {
 
 
         Posts findPost = postRepository.findById(posts.getId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
-        findPost.setTitle("test2");
-        findPost.setContent("test2");
+        findPost.updatePosts("test2","test2",findPost.getPostsCategory());
         Posts updatedPost = postRepository.save(findPost);
 
         assertEquals(updatedPost.getTitle(), findPost.getTitle());
