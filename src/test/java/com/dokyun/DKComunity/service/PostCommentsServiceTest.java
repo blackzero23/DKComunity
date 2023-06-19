@@ -51,7 +51,13 @@ class PostCommentsServiceTest {
         Member savedMember = memberRepository.save(member);
         PostsCategory category = PostsCategory.builder().title("test").build();
         PostsCategory savedCategory = postCategoryRepository.save(category);
-        Posts posts = Posts.createPosts("test", "test", savedMember, savedCategory);
+        Posts posts = Posts.builder()
+                .postsCategory(savedCategory)
+                .title("test")
+                .content("test")
+                .member(savedMember)
+                .build();
+
         Posts savedPosts = postRepository.save(posts);
         PostComments test = PostComments.createPostComments("test", savedMember, savedPosts);
 

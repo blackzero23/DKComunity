@@ -1,96 +1,115 @@
 package com.dokyun.DKComunity.service;
 
+import com.dokyun.DKComunity.domain.Member;
 import com.dokyun.DKComunity.domain.Posts;
 import com.dokyun.DKComunity.domain.PostsCategory;
+import com.dokyun.DKComunity.dto.member.MemberSignupDto;
+import com.dokyun.DKComunity.dto.post.PostCateCreateDto;
+import com.dokyun.DKComunity.dto.post.PostCreateDto;
+import com.dokyun.DKComunity.dto.post.PostInfoDto;
+import com.dokyun.DKComunity.repository.MemberRepository;
 import com.dokyun.DKComunity.repository.PostCategoryRepository;
 import com.dokyun.DKComunity.repository.PostRepository;
-import org.junit.jupiter.api.AfterEach;
+import com.dokyun.DKComunity.service.serviceImpl.MemberServiceImpl;
+import com.dokyun.DKComunity.service.serviceImpl.PostCategoryServiceImpl;
+import com.dokyun.DKComunity.service.serviceImpl.PostServiceImpl;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class PostServiceImplTest {
-
     @Autowired
-    PostRepository postRepository;
+    PostService postService;
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    PostCategoryService postCategoryService;
+    @Autowired
+    MemberRepository memberRepository;
     @Autowired
     PostCategoryRepository postCategoryRepository;
+    @Autowired
+    PostRepository postRepository;
 
-    PostsCategory postsCategory;
-    Posts posts;
-    @BeforeEach
-    void setUp() {
-        postsCategory = new PostsCategory();
-        postsCategory.setTitle("test");
-        postCategoryRepository.save(postsCategory);
 
-        posts = new Posts();
-        posts.setTitle("test");
-        posts.setContent("test");
-        posts.setPostsCategory(postsCategory);
-        postRepository.save(posts);
+    @DisplayName("게시판 생성")
+    @Test
+    void postCreate(){
+        //given
+        MemberSignupDto memberSignupDto = MemberSignupDto.builder().nickName("test").email("test@gmail.com").password("test").build();
+        memberService.signup(memberSignupDto);
+        postCategoryService.createPostCategory(PostCateCreateDto.builder().title("quant").build());
+        Optional<PostsCategory> postsCategory = postCategoryRepository.findByTitle("quant");
+        PostInfoDto post = postService.createPost(PostCreateDto.builder().categoryId(1L).memberId(1L).content("내용 없음").title("테스트한다!").build());
+        //when
+        Optional<Posts> posts = postRepository.findById(1L);
+
+        //then
+        Posts post1 = null;
+        if(posts.isPresent()){
+            post1 = posts.get();
+            Assertions.assertThat("테스트한다!").isEqualTo(post1.getTitle());
+        }
     }
 
-//    @AfterEach
-//    void tearDown() {
-//        postRepository.delete(posts);
-//        postCategoryRepository.delete(postsCategory);
-//    }
-
-    @Test
-    @DisplayName("게시글 생성")
-    void createPost() {
-        Posts posts = new Posts();
-        posts.setTitle("test");
-        posts.setContent("test");
-        posts.setPostsCategory(postsCategory);
-        Posts savedPost = postRepository.save(posts);
-
-        assertEquals(savedPost.getTitle(), posts.getTitle());
-        assertEquals(savedPost.getContent(), posts.getContent());
-        assertEquals(savedPost.getPostsCategory().getTitle(), posts.getPostsCategory().getTitle());
-    }
-
-    @Test
-    @DisplayName("게시글 조회")
-    @Transactional
-    void getPost() {
-        Posts findPost = postRepository.findById(posts.getId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
-
-        assertEquals(findPost.getTitle(), posts.getTitle());
-        assertEquals(findPost.getContent(), posts.getContent());
-        assertEquals(findPost.getPostsCategory().getTitle(), posts.getPostsCategory().getTitle());
-    }
-
-    @Test
     @DisplayName("게시글 수정")
-    @Transactional
-    void updatePost() {
-        Posts findPost = postRepository.findById(posts.getId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
-        findPost.setTitle("test2");
-        findPost.setContent("test2");
-        Posts updatedPost = postRepository.save(findPost);
-
-        assertEquals(updatedPost.getTitle(), findPost.getTitle());
-        assertEquals(updatedPost.getContent(), findPost.getContent());
-        assertEquals(updatedPost.getPostsCategory().getTitle(), findPost.getPostsCategory().getTitle());
-    }
-
     @Test
-    @DisplayName("게시글 삭제")
-    @Transactional
-    void deletePost(){
-        postRepository.delete(posts);
+    void postSearch(){
+        //given
+        MemberSignupDto memberSignupDto = MemberSignupDto.builder().nickName("test").email("test@gmail.com").password("test").build();
+        memberService.signup(memberSignupDto);
+        postCategoryService.createPostCategory(PostCateCreateDto.builder().title("quant").build());
+        Optional<PostsCategory> postsCategory = postCategoryRepository.findByTitle("quant");
+        PostInfoDto post = postService.createPost(PostCreateDto.builder().categoryId(1L).memberId(1L).content("내용 없음").title("테스트한다!").build());
+        //when
+        post.setTitle("updateTitle");
+        post.setContent("updateContent");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            postRepository.findById(posts.getId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
-        });
+        PostInfoDto postInfoDto = postService.updatePost(post);
+
+        //then
+
+        Assertions.assertThat("updateTitle").isEqualTo(postInfoDto.getTitle());
+        Assertions.assertThat("updateContent").isEqualTo(postInfoDto.getContent());
     }
+
+    @DisplayName("게시글 Id 단일 조회")
+    @Test
+    void postGetId(){
+        //given
+        MemberSignupDto memberSignupDto = MemberSignupDto.builder().nickName("test").email("test@gmail.com").password("test").build();
+        memberService.signup(memberSignupDto);
+        postCategoryService.createPostCategory(PostCateCreateDto.builder().title("quant").build());
+        Optional<PostsCategory> postsCategory = postCategoryRepository.findByTitle("quant");
+        PostInfoDto post = postService.createPost(PostCreateDto.builder().categoryId(1L).memberId(1L).content("내용 없음").title("테스트한다!").build());
+        //when
+        PostInfoDto findPostsInfoDto = postService.getPost(1L);
+        //then
+        Assertions.assertThat(findPostsInfoDto.getTitle()).isEqualTo("테스트한다!");
+    }
+
+    @DisplayName("게시글 삭제")
+    @Test
+    void postserviceDelete(){
+        //given
+        MemberSignupDto memberSignupDto = MemberSignupDto.builder().nickName("test").email("test@gmail.com").password("test").build();
+        memberService.signup(memberSignupDto);
+        postCategoryService.createPostCategory(PostCateCreateDto.builder().title("quant").build());
+        Optional<PostsCategory> postsCategory = postCategoryRepository.findByTitle("quant");
+        PostInfoDto post = postService.createPost(PostCreateDto.builder().categoryId(1L).memberId(1L).content("내용 없음").title("테스트한다!").build());
+        //when
+        postService.deletePost(1L);
+        List<Posts> postsList = postRepository.findAll();
+        //then
+        Assertions.assertThat(postsList.size()).isEqualTo(0);
+    }
+
 
 }
