@@ -57,7 +57,8 @@ public class PostServiceImpl implements PostService {
     public PostInfoDto updatePost(PostInfoDto postInfoDto) {
         Posts posts = postRepository.findById(postInfoDto.getId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 
-        posts.updatePosts(postInfoDto.getTitle(), postInfoDto.getContent());
+        //TODO: 카테고리 ID가 조작될 우려는 없지만 get 말고 다른방법을 사용하든 위 처럼 Exception 뛰우는걸로 방어.
+        posts.updatePosts(postInfoDto.getTitle(), postInfoDto.getContent(),postCategoryRepository.findById(postInfoDto.getPostCateId()).get());
 
         postRepository.save(posts);
 
