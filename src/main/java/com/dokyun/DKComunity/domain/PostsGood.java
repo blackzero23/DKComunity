@@ -14,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class PostsGood {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "posts_good_id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
