@@ -29,6 +29,7 @@ public class PostGoodServiceImpl implements PostGoodService {
         Member member = memberRepository.findById(postGoodDto.getMemberId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         Posts posts = postRepository.findById(postGoodDto.getPostId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         //좋아요 추가
+        PostsGood.builder().posts(posts).member(member);
         PostsGood postsGood = PostsGood.CreatePostGood(member, posts);
         postGoodRepository.save(postsGood);
     }

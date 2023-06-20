@@ -1,14 +1,17 @@
 package com.dokyun.DKComunity.domain;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+//@Setter
 @Table(name = "posts_good")
+@NoArgsConstructor
 public class PostsGood {
     @Id
     @Column(name = "posts_good_id")
@@ -17,11 +20,9 @@ public class PostsGood {
     private Posts posts;
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
-
-    public static PostsGood CreatePostGood(Member member, Posts posts) {
-        PostsGood postsGood = new PostsGood();
-        postsGood.setMember(member);
-        postsGood.setPosts(posts);
-        return postsGood;
+    @Builder
+    public PostsGood(Member member, Posts posts) {
+        this.member = member;
+        this.posts = posts;
     }
 }
