@@ -13,5 +13,5 @@ public interface PostsGoodRepository extends JpaRepository<PostsGood, Long> {
     Page<PostsGood> findByMember(Member member, Pageable pageable);
 
     //현재 게시판에 대한 좋아요 개수.
-    long countByPosts(Posts posts);
+    Long countByPosts(Posts posts);
 }
