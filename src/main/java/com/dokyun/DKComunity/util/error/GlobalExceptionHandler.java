@@ -11,6 +11,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    //TODO: 에러코드 문서호 ㅏ하는 코드  및 테스트 한번해봐야되는데 Rest Doc으로 구현하는거네?? 생각 해봐야할듯.
+
+    /**
+     *  javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
+     *  HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
+     *  주로 @RequestBody, @RequestPart 어노테이션에서 발생
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidException(MethodArgumentNotValidException e){
         ErrorCode errorCode = ErrorCode.INVALID_INPUT_VALUE;
